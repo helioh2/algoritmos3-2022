@@ -44,8 +44,8 @@ def remover(raiz:Node, elemento) -> Node:
             return raiz.esq
 
         #else
-        # setando os filhos esquerdo e direito do sucessor apontando o esquerdo e direito da raiz
-        # substituindo a raiz pelo sucessor
+        # setando os filhos esquerdo e direito do sucessor apontando p/ o esquerdo e direito da raiz
+        # ou seja, substituindo a raiz pelo sucessor
         node_sucessor.esq = raiz.esq
         node_sucessor.dir = raiz.dir
 
@@ -60,13 +60,24 @@ def remover(raiz:Node, elemento) -> Node:
     return raiz
 
 
-
+#TESTES:
 arvore_um_elemento = Node(5)
 arvore_dois_elementos_esquerda = Node(5, Node(2), VAZIA)
 arvore_tres_elementos = Node(5, Node(2), Node(10))
-arvore_quatro_elementos = Node(5, Node(2), Node(10, Node(8), VAZIA))
-arvore_cinco_elementos = Node(5, Node(2), Node(10, Node(8, VAZIA, Node(9)), VAZIA))
+arvore_quatro_elementos = Node(5, 
+                                Node(2), 
+                                Node(10, 
+                                    Node(8), 
+                                    VAZIA))
+arvore_cinco_elementos = Node(5, 
+                                Node(2), 
+                                Node(10, 
+                                    Node(8, 
+                                        VAZIA, 
+                                        Node(9)), 
+                                    VAZIA))
 
+# remoção de árvore vazia e árvore com um único elemento
 assert remover(VAZIA, 5) == VAZIA
 assert remover(arvore_um_elemento, 5) == VAZIA
 
@@ -79,5 +90,5 @@ assert remover(arvore_tres_elementos, 5) == Node(10, Node(2), VAZIA)
 # sucessor está mais profundo
 assert remover(arvore_quatro_elementos, 5) == Node(8, Node(2), Node(10))
 
-#sucessor que tem filho da direita
+# sucessor que tem filho da direita
 assert remover(arvore_cinco_elementos, 5) == Node(8, Node(2), Node(10, Node(9), VAZIA))
