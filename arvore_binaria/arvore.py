@@ -83,10 +83,8 @@ assert adicionar_na_arvore(Node(18), 8) == Node(18, Node(8), VAZIA)
 # Inserir quando vai à direita da raiz
 assert adicionar_na_arvore(Node(18), 36) == Node(18, VAZIA, Node(36))
 
-# Inserir quando vai à direita da raiz
+# Mais profundo na árvore:
 assert adicionar_na_arvore(Node(18, Node(8), VAZIA), 5) == Node(18, Node(8, Node(5), VAZIA), VAZIA)
-
-# Inserir quando vai à direita da raiz
 assert adicionar_na_arvore(Node(18, Node(8), VAZIA), 10) == Node(18, Node(8, VAZIA, Node(10)), VAZIA)
 
 
