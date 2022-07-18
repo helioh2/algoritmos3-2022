@@ -32,7 +32,6 @@ def encontra_e_remove_sucessor(raiz:Node) -> Node:
 
 def remover(raiz:Node, elemento) -> Node:
 
-
     if raiz == VAZIA:
         return raiz
 
@@ -54,8 +53,10 @@ def remover(raiz:Node, elemento) -> Node:
     # else
     if elemento <= raiz.conteudo:
         raiz.esq = remover(raiz.esq, elemento)
+        # Procura e remove do lado esquerdo, e seta o ponteiro para a nova subárvore esquerda
     else:
         raiz.dir = remover(raiz.dir, elemento)
+        # Procura e remove do lado direito, e seta o ponteiro para a nova subárvore direita
 
     return raiz
 
