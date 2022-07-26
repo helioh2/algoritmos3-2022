@@ -3,13 +3,13 @@
 
 class Node:
 
-    def __init__(self, chave=None, filhos=[]):
+    def __init__(self, chave=None, filhos=None):
         """
         Chave pode ser None ou um 
         caractere (string), 'filhos' é uma lista de Nodes 
         """
         self.chave = chave
-        self.filhos = filhos
+        self.filhos = [] if not filhos else filhos
 
 
     def __str__(self) -> str:
