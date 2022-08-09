@@ -24,3 +24,17 @@ print(tabela.n/tabela.m)
 tamanhos_buckets = [len(tabela.vetor[i]) for i in range(tabela.m)]
 print(max(tamanhos_buckets))
 
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams["figure.figsize"] = [7.50, 3.50]
+plt.rcParams["figure.autolayout"] = True
+
+x = np.array(range(tabela.m))
+y = np.array(tamanhos_buckets)
+
+plt.title("Line graph")
+plt.bar(x, y, color="red")
+
+plt.show()

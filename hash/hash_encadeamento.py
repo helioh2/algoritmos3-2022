@@ -22,7 +22,7 @@ class TabelaHash:
         self.m = m
         self.n = 0
         self.vetor = [[] for _ in range(m)]
-        self.fator_carga_maximo = 2
+        self.fator_carga_maximo = 10
 
     def __str__(self):
         string = ""
@@ -33,6 +33,14 @@ class TabelaHash:
             string += "\n"
 
         return string
+
+    def table_iter(self):
+        for bucket in self.vetor:
+            for item in bucket:
+                yield item
+
+    def __iter__(self):
+        return self.table_iter()
 
 
 # operações
@@ -54,7 +62,6 @@ def redimensionar(tabela: TabelaHash):
             inserir(item, tabela)
 
     return tabela
-
 
 
 def inserir(chave, tabela:TabelaHash) -> TabelaHash:
@@ -82,7 +89,7 @@ def busca(chave: object, tabela:TabelaHash) -> object:
 
     for item in tabela.vetor[indice]:
         if item == chave:
-            return chave
+            return item
 
     #else
     return None
@@ -134,4 +141,8 @@ print(tabela1.n)
 # print(tabela1)
 # print(tabela1.n)
 
+for item in tabela1:
+    print(item)
 
+
+# def gen_test()

@@ -1,0 +1,153 @@
+from enum import Enum, auto
+
+
+class StatusBucket(Enum):
+    LIVRE = auto()
+    DELETADO = auto()
+
+    def __str__(self):
+        if self.name == "LIVRE":
+            return "L"
+        else:
+            return "D"
+
+
+
+class TabelaHash:
+
+    def __init__(self, m=5):
+        self.m = m
+        self.n = 0
+        self.vetor = [StatusBucket.LIVRE]*m
+        self.fator_carga_maximo = 0.5
+
+    def __str__(self) -> str:
+        string = "["
+        for item in self.vetor:
+            string += str(item) + ", "
+        string = string[:-2]
+        string += "]"   
+        return string
+
+
+
+def nosso_hash(chave, k, m) -> int:
+    return (hash(chave) + k) % m
+
+
+def redimensionar(tabela:TabelaHash) -> TabelaHash:
+    vetor_antigo = tabela.vetor
+
+    tabela.m *= 2
+    tabela.n = 0
+    tabela.vetor = [StatusBucket.LIVRE]*tabela.m
+
+    for item in vetor_antigo:
+        if item not in (StatusBucket.LIVRE, StatusBucket.DELETADO):
+            inserir(item, tabela)
+    
+    return tabela
+
+
+
+
+
+def inserir(chave, tabela:TabelaHash) -> TabelaHash:
+    k = 0
+    indice = nosso_hash(chave, k, tabela.m)
+
+    while tabela.vetor[indice] != StatusBucket.LIVRE:
+        if tabela.vetor[indice] == chave: # encontrou repetido
+            return tabela  # não insere e termina
+
+        k += 1
+        indice = nosso_hash(chave, k, tabela.m)
+
+    # else (achou um livre), então inserir:
+    tabela.vetor[indice] = chave
+    tabela.n += 1
+
+    fator_carga = tabela.n / tabela.m
+
+    if fator_carga > tabela.fator_carga_maximo:
+        tabela = redimensionar(tabela)
+
+
+def buscar(chave, tabela:TabelaHash):
+    k = 0
+    indice = nosso_hash(chave, k, tabela.m)
+
+    while tabela.vetor[indice] != StatusBucket.LIVRE:
+        if tabela.vetor[indice] == chave: # encontrou
+            return tabela.vetor[indice]
+
+        k += 1
+
+        if k == tabela.m:  # deu a volta
+            return False
+
+        indice = nosso_hash(chave, k, tabela.m)
+
+    # else (achou um livre)
+    return False
+
+
+def remover(chave, tabela:TabelaHash):
+    k = 0
+    indice = nosso_hash(chave, k, tabela.m)
+
+    while tabela.vetor[indice] != StatusBucket.LIVRE:
+        if tabela.vetor[indice] == chave: # encontrou
+            item = tabela.vetor[indice]
+            tabela.vetor[indice] = StatusBucket.DELETADO
+            tabela.n -= 1
+            return item
+    
+        k += 1
+
+        if k == tabela.m:  # deu a volta
+            return False
+
+        indice = nosso_hash(chave, k, tabela.m)
+
+    # else (achou um livre)
+    return False
+
+
+tabela1 = TabelaHash()
+inserir(1, tabela1)
+inserir(6, tabela1)
+inserir(2, tabela1)
+print(tabela1)
+
+assert buscar(6, tabela1)
+assert buscar(1, tabela1)
+assert not buscar(7, tabela1)
+
+inserir(4, tabela1)
+inserir(0, tabela1)
+print(tabela1)
+
+assert not buscar(3, tabela1)
+
+assert remover(6, tabela1)
+print(tabela1)
+
+assert buscar(2, tabela1)
+assert not buscar(6, tabela1)
+
+
+tabela2 = TabelaHash()
+
+inserir(1, tabela2)
+inserir(6, tabela2)
+print(tabela2)
+inserir(2, tabela2)
+print(tabela2)
+inserir(11, tabela2)
+inserir(12, tabela2)
+print(tabela2)
+inserir(58, tabela2)
+print(tabela2)
+
+
