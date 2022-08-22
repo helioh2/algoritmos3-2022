@@ -1,5 +1,3 @@
-
-
 class Pessoa:
 
     def __init__(self, id, nome, email):
@@ -15,14 +13,12 @@ class Pessoa:
         return str(self.__dict__)
 
 
-
 class TabelaHash:
 
     def __init__(self, m=17):
         self.m = m
         self.n = 0
         self.vetor = [[] for _ in range(m)]
-        self.fator_carga_maximo = 10
 
     def __str__(self):
         string = ""
@@ -145,4 +141,24 @@ for item in tabela1:
     print(item)
 
 
-# def gen_test()
+def gen_cont(k):
+    contador = 0
+    for _ in range(k):
+        contador += 1
+        yield contador
+
+
+
+cont = gen_cont(3)
+print(next(cont))
+print(next(cont))
+print(next(cont))
+
+
+# for x in gen_cont(5):
+#     print(x)
+
+
+
+
+
