@@ -87,7 +87,6 @@ class GrafoListaAdjacencia:
         self.print_busca_profundidade_rec(v0, visitados=[])
 
 
-
     def print_busca_profundidade_iterativa(self, v0):
 
         pilha = [v0]
