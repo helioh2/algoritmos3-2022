@@ -2,7 +2,7 @@
 ##### experimentando ##############
 
 #Ex grafo com lista de adjacencia usando dicionario
-from queue import Queue
+from queue import PriorityQueue, Queue
 
 
 grafo = {
@@ -127,6 +127,27 @@ class GrafoListaAdjacencia:
                     fila.put(vizinho)
 
 
+    def print_busca_largura_iterativa_2(self, v0):
+
+        visitados = set()
+
+        fila = Queue()
+        fila.put(v0)
+
+        while not fila.empty():
+
+            v_atual = fila.get()
+
+            print(v_atual)
+
+            visitados.add(v_atual)
+
+            for vizinho in self.get_vizinhanca(v_atual):
+                if vizinho not in visitados:
+                    fila.put(vizinho)
+    
+
+
     def vertices_sem_entrada(self):
         res = []
         for v in self.vertices:
@@ -167,6 +188,38 @@ class GrafoListaAdjacencia:
 
         return list(reversed(sequencia))
             
+
+    def menor_caminho_fila(self, v0):
+
+        distancia = {v: float('inf') for v in self.vertices}
+        distancia[v0] = 0
+        pai = {v: None for v in self.vertices}
+        visitados = set()
+
+        fila = PriorityQueue()
+        fila.put((0, v0))
+
+        while not fila.empty():
+
+            (dist, v_atual) = fila.get()
+            visitados.add(v_atual)
+
+            for vizinho in self.get_vizinhanca(v_atual):
+                
+                if vizinho not in visitados:
+                    custo_antigo = distancia[vizinho]
+                    custo_novo = distancia[v_atual] + 1
+
+                    if custo_novo < custo_antigo:
+                        fila.put((custo_novo, vizinho))
+                        distancia[vizinho] = custo_novo
+                        pai[vizinho] = v_atual
+        
+        return distancia
+
+
+    
+
 
 
     def __str__(self) -> str:

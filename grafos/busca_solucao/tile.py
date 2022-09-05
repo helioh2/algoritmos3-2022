@@ -2,7 +2,7 @@ from ast import operator
 from copy import deepcopy
 import math
 import sys
-sys.setrecursionlimit(5000)
+# sys.setrecursionlimit(5000)
 
 B = None
 
@@ -45,7 +45,7 @@ def procura_posicao_b(tiles):
     for i in range(3):
         for j in range(3):
             if tiles[i][j] is None:
-                return i, j
+                return (i, j)
 
 
 def dentro(i, j):
@@ -73,8 +73,8 @@ def novo_tiles_mudando_posicoes(tiles, posicao_b, nova_posicao_b):
 
 
 
-def proximos_apos_movimentos(tiles):
-    movimentos = [(-1,0), (1,0), (0,1), (0,-1)] #baixo, cima, direita, esquerda
+def proximos_apos_movimento(tiles):
+    movimentos = [(-1,0), (1,0), (0,1), (0,-1)] #cima, baixo, direita, esquerda
     posicao_b = procura_posicao_b(tiles)
 
     for movimento in movimentos:
@@ -101,7 +101,7 @@ def resolver(tiles, visitados=set(), cont=0):
     print("qtd visitados:", len(visitados))
     print("chamadas:", cont)
 
-    for proximo in proximos_apos_movimentos(tiles):
+    for proximo in proximos_apos_movimento(tiles):
         if proximo not in visitados:
             possivel_solucao = resolver(proximo, visitados, cont+1)
             if possivel_solucao:

@@ -33,10 +33,21 @@ class GrafoMatrizAdjacencia:
         for aresta in arestas:
             vertice1 = aresta[0]
             vertice2 = aresta[1]
+            peso = aresta[2]
             linha = vertices.index(vertice1)
             coluna = vertices.index(vertice2)
 
-            self.matriz[linha][coluna] = 1
+            self.matriz[linha][coluna] = peso
+            self.matriz[coluna][linha] = peso
+
+    def get_vizinhanca(self, vertice):
+        if vertice in self.vertices:
+            index_vertice = self.vertices.index(vertice)
+            for i in range(len(self.matriz)):
+                yield (self.vertices[i], self.matriz[index_vertice][i]) 
+
+    def existe_aresta(self, vertice1, vertice2):
+        return self.matriz[vertice1][vertice2]
 
     def __str__(self):
         string = "\t"
