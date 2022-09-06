@@ -53,8 +53,10 @@ class GrafoPonderado:
         fila = PriorityQueue()
         fila.put((0, v0))
 
-        distancias = {v: float('inf') for v in self.vertices}
-        distancias[v0] = 0
+        distancia = {v: float('inf') for v in self.vertices}
+        distancia[v0] = 0
+
+        pai = {v: None for v in self.vertices}
 
         while not fila.empty():
 
@@ -67,13 +69,14 @@ class GrafoPonderado:
                 if vizinho not in visitados:
                     
                     custo_novo = peso_atual + peso
-                    custo_antigo = distancias[vizinho]
+                    custo_antigo = distancia[vizinho]
 
                     if custo_novo < custo_antigo:
-                        distancias[vizinho] = custo_novo
+                        distancia[vizinho] = custo_novo
+                        pai[vizinho] = v_atual
                         fila.put((custo_novo, vizinho))
 
-        return distancias
+        return distancia, pai
 
 
     def __str__(self) -> str:
@@ -100,6 +103,7 @@ print(grafo1)
 print(grafo1.dikjstra("A"))
 
 
+## Grafo da página: https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/dijkstras-algorithm/
 vertices = list(range(0,9))
 arestas = [(0,1,4), (0,6,7), (1,2,9), (1,6,11), (1,7,20), (2,3,6), (2,4,2),
             (3,5,5), (3,4,10), (4,7,1), (4,8,5), (4,5,15), (6,7,1),

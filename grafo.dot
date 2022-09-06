@@ -1,0 +1,4 @@
+graph{
+0 -- 1[label="10",weight="10"];
+1 -- 2[label="15",weight="15"];
+}
