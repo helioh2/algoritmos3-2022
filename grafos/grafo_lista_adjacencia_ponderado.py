@@ -78,6 +78,40 @@ class GrafoPonderado:
 
         return distancia, pai
 
+    def prims_mst(self):
+
+        visitados = set()
+
+        # Árvore resultante
+        result = {v:set() for v in self.vertices}
+        
+        visitados.add(self.vertices[0])
+
+        # Enquanto existem nós não visitados:
+        while len(visitados) < len(self.vertices):
+
+            minimo = float('inf')  # +infinito
+            inicial = self.vertices[0]
+            final = self.vertices[0]
+
+            # Itera sobre cada vértice que já foi visitado
+            for v_atual in visitados:
+                for vizinho, peso in self.get_vizinhanca(v_atual):
+                    if vizinho not in visitados and peso < minimo:
+                        # Define o novo mínimo, o vértice inicial e o vértice final
+                        minimo = peso
+                        inicial, final = v_atual, vizinho
+            
+            # Adicionando vértice final aos visitados
+            visitados.add(final)         
+            
+            if minimo != float('inf'):
+                result[inicial].add((final, minimo))
+                result[final].add((inicial, minimo))
+
+        return result
+
+
 
     def __str__(self) -> str:
         string = ""
@@ -112,3 +146,6 @@ arestas = [(0,1,4), (0,6,7), (1,2,9), (1,6,11), (1,7,20), (2,3,6), (2,4,2),
 grafo_grande = GrafoPonderado(vertices=vertices, arestas=arestas)
 
 print(grafo_grande.dikjstra(0))  # verificar porque achou caminho 22 para o 5
+
+
+print(grafo_grande.prims_mst())
